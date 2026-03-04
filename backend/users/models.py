@@ -9,11 +9,11 @@ class User(AbstractUser):
     )
     #fields
     email = models.EmailField(unique = True)
-    username = moels.CharField(max_length = 15, blank = True, null =True)
+    username = models.CharField(max_length = 15, blank = True, null =True)
     role = models.CharField(max_length = 20, choice= ROLE_CHOICES, default = "customer", help_text ="Role of the user")
 
-    created_at = model.DateTimeField(auto_now_add = True)
-    updated_at = model.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now_add = True)
 
     #methods
 
