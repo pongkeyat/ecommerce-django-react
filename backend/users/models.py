@@ -9,21 +9,28 @@ class User(AbstractUser):
     )
     #fields
     email = models.EmailField(unique = True)
+    
     username = models.CharField(max_length = 15, blank = True, null =True)
-    role = models.CharField(max_length = 20, choice= ROLE_CHOICES, default = "customer", help_text ="Role of the user")
+    role = models.CharField(max_length = 20, choices= ROLE_CHOICES, default = "customer", help_text ="Role of the user")
+
+    # use email as the unique identifier for authentication
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
     #methods
 
     def __str__(self):
-        return  f"{self.username} ({self.role})"
+        # username may be blank/null; fall back to email
+        display = self.username if self.username else self.email
+        return f"{display} ({self.role})"
     
     
-    def is_(self):
+    def is_vendor(self):
         return self.role == "vendor"
     
-    def is_admin(self):
+    def is_customer(self):
         return self.role == "customer"
 
